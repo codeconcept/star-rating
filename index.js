@@ -1,20 +1,32 @@
 const allStars = document.querySelectorAll(".fa-star");
 console.log("allStars", allStars);
+const highlightedStars = [];
+const rating = document.querySelector(".rating");
 
 init();
 
 function init() {
   allStars.forEach((star) => {
-    star.addEventListener("click", getRating);
+    star.addEventListener("click", saveRating);
     star.addEventListener("mouseover", addCSS);
     star.addEventListener("mouseleave", removeCSS);
   });
 }
 
-function getRating(e) {
+function saveRating(e) {
   console.log(e, e.target, e.target.nodeName, e.target.nodeType);
   console.dir(e.target);
   console.log(e.target.dataset);
+  removeEventListenersToAllStars();
+  rating.innerText = e.target.dataset.star;
+}
+
+function removeEventListenersToAllStars() {
+  allStars.forEach((star) => {
+    star.removeEventListener("click", saveRating);
+    star.removeEventListener("mouseover", addCSS);
+    star.removeEventListener("mouseleave", removeCSS);
+  });
 }
 
 function addCSS(e, css = "checked") {
